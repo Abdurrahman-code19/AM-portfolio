@@ -445,18 +445,24 @@ footer {
             position: relative;
         }
 
-        .image-placeholder {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: var(--border-radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            overflow: hidden;
-        }
+      .image-placeholder {
+  width: 100%;
+  height: 400px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none; /* remove gradient since we're using an image */
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* keeps proportions but fills the box */
+  border-radius: var(--border-radius);
+}
+
 
         .about-text h2 {
             margin-bottom: 1.5rem;
@@ -1006,6 +1012,77 @@ footer {
             font-size: 0.9rem;
         }
 
+        /* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger .bar {
+  height: 3px;
+  width: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animate into X */
+.hamburger.active .bar:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* Mobile Nav Menu */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    gap: 1.5rem;
+    padding: 2rem 0;
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+  }
+
+  .nav-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-item {
+    text-align: center;
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    font-size: 1.1rem;
+  }
+}
+
+
+
         /* Responsive Design */
         @media (max-width: 992px) {
             h1 {
@@ -1126,35 +1203,41 @@ footer {
         </div>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <a href="#" class="logo">RIDO</a>
-            
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-                <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
-                <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
-                <li class="nav-item"><a href="#blog" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            
-            <div class="nav-actions">
-                <button class="theme-toggle" id="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </div>
-        </div>
-    </header>
+<!-- Header -->
+<header>
+  <div class="container nav-container">
+    <!-- Logo -->
+    <a href="#" class="logo">RIDO</a>
+
+    <!-- Nav Menu -->
+    <ul class="nav-menu" id="nav-menu">
+      <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+      <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+      <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+      <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
+      <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
+      <li class="nav-item"><a href="#blog" class="nav-link">Blog</a></li>
+      <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <!-- Actions (Theme + Hamburger) -->
+    <div class="nav-actions">
+      <!-- Theme Toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+
+      <!-- Hamburger -->
+      <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </div>
+</header>
+
 
     <!-- Hero Section -->
     <section id="hero">
@@ -1185,11 +1268,11 @@ footer {
     <section id="about" class="section">
         <div class="container">
             <div class="about-content">
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-user fa-5x"></i>
-                    </div>
-                </div>
+             <div class="about-image">
+                 <div class="image-placeholder">
+                  <img src="profile.jpeg" alt="Abdurrahseed - Full-Stack Developer">
+              </div>
+            </div>
                 
                 <div class="about-text">
                     <h2>About Me</h2>
@@ -1730,21 +1813,23 @@ footer {
             themeIcon.classList.add('fa-sun');
         }
 
-        // Mobile Navigation
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+// ✅ Mobile Navigation (Improved)
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("nav-menu");
 
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navMenu.classList.toggle("active");
+});
+
+// Close menu when clicking a nav link
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navMenu.classList.remove("active");
+  });
+});
+
 
         // Header scroll effect
         window.addEventListener('scroll', () => {
@@ -1849,6 +1934,9 @@ footer {
                 });
             });
         });
+
+
+
 
         // Expand timeline items
         const timelineItems = document.querySelectorAll('.timeline-content');
